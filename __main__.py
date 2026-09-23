@@ -4,7 +4,6 @@ import traceback
 import tkinter as tk
 
 from app import SnifferApp
-from settings_dialog import SettingsDialog
 
 
 def _print_exception(exc_type, exc, tb):
@@ -17,16 +16,9 @@ def main():
 
     root = tk.Tk()
     root.report_callback_exception = _print_exception
+    root.geometry("900x560")
 
-    dlg = SettingsDialog(root)
-    dlg.wait()
-
-    if dlg.result is None:
-        root.destroy()
-        return
-
-    dlg.clear()
-    app = SnifferApp(root, dlg.result)
+    app = SnifferApp(root)
     if not app.ready:
         return
     root.mainloop()
