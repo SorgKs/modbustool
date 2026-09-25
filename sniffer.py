@@ -27,8 +27,8 @@ class SnifferWorker(threading.Thread):
             while not self.stop_event.is_set():
                 chunk = self.ser.read(256)
                 now = time.monotonic()
-                for raw, t_end, prev_end in self.assembler.feed(chunk, now):
-                    self.q.put(('frame', raw, t_end, prev_end))
+                for raw, t_end, prev_end, tight in self.assembler.feed(chunk, now):
+                    self.q.put(('frame', raw, t_end, prev_end, tight))
         except Exception as e:
             traceback.print_exc(file=sys.stderr)
             sys.stderr.flush()
